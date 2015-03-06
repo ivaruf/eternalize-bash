@@ -7,6 +7,7 @@ cp $1 $1_backup
 sed -i s/^HISTSIZE\=/#HISTSIZE\=/g $1
 sed -i s/^HISTFILESIZE\=/#HISTFILESIZE\=/g $1
 
+cat eternal_bash_snippet.txt >> $1
 
 echo "Diff of backup and new .bashrc"
 diff $1_backup $1
