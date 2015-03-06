@@ -39,8 +39,9 @@ DROPBOX_DEFAULT_LOCATION="/home/$USER/Dropbox"
 if [ -d "$DROPBOX_DEFAULT_LOCATION" ]; then
 	echo "Dropbox found at default location: $DROPBOX_DEFAULT_LOCATION"
 	echo "Making history-file to dropbox and making symlink"
-	touch ${DROPBOX_DEFAULT_LOCATION}/.bash_eternal_history
-	ln -s ${DROPBOX_DEFAULT_LOCATION}/.bash_eternal_history .bash_eternal_history
+	mkdir -p  ${DROPBOX_DEFAULT_LOCATION}/linux_dot/
+	touch ${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history
+	ln -s ${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history .bash_eternal_history
 
 else
 	echo "Dropbox not found, not adding symlink"
