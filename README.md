@@ -10,3 +10,5 @@ bash history between terminals on one machine.
 
 This is experimental stuff, I have tried to make the script so that there is very little chance it will break
 anything, but i give no guarantees.
+
+If you do not want to run the script, snippet to eternalize your bash history can be found in eternal_bash_history.txt
