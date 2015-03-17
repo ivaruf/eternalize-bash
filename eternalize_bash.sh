@@ -3,8 +3,12 @@
 echo "Entering home directoy"
 cd
 
-echo "Making a copy of your .bashrc file to .bashrc_backup"
-cp .bashrc .bashrc_backup
+if [ -f .bashrc ]; then
+  echo "Making a copy of your .bashrc file to .bashrc_backup"
+  cp .bashrc .bashrc_backup
+else
+  echo ".bashrc not found"
+fi
 
 echo "Comment out old occurances of HISTSIZE and HISTFILESIZE"
 sed -i s/^HISTSIZE\=/#HISTSIZE\=/g $1
