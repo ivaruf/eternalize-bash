@@ -35,7 +35,7 @@ echo "${ETERNAL_BASH_SNIPPET}" >> .bashrc
 echo "Setting new .bashrc as source"
 source .bashrc
 
-DROPBOX_DEFAULT_LOCATION="~/Dropbox"
+DROPBOX_DEFAULT_LOCATION=~/Dropbox/
 
 if [ -d "$DROPBOX_DEFAULT_LOCATION" ]; then
 	echo "Dropbox found at default location: $DROPBOX_DEFAULT_LOCATION"
