@@ -32,9 +32,6 @@ PROMPT_COMMAND=\"history -a; history -c; history -r; \$PROMPT_COMMAND\""
 echo "Appending eternal bash snippet to end of .bashrc"
 echo "${ETERNAL_BASH_SNIPPET}" >> .bashrc
 
-echo "Diff of backup and new .bashrc:"
-diff .bashrc_backup .bashrc
-
 echo "Setting new .bashrc as source"
 source .bashrc
 
