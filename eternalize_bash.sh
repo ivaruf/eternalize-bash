@@ -6,11 +6,10 @@ cd
 if [ -f .bashrc ]; then
   echo "Making a copy of your .bashrc file to .bashrc_backup"
   cp .bashrc .bashrc_backup
+  echo "Comment out old occurances of HISTSIZE and HISTFILESIZE"
+  sed -i s/^HISTSIZE\=/#HISTSIZE\=/g .bashrc
+  sed -i s/^HISTFILESIZE\=/#HISTFILESIZE\=/g .bashrc
 fi
-
-echo "Comment out old occurances of HISTSIZE and HISTFILESIZE"
-sed -i s/^HISTSIZE\=/#HISTSIZE\=/g $1
-sed -i s/^HISTFILESIZE\=/#HISTFILESIZE\=/g $1
 
 ETERNAL_BASH_SNIPPET="
 # Eternal bash history.
