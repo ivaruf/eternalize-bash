@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Entering home directoy"
-cd /home/$USER
+cd
 
 echo "Making a copy of your .bashrc file to .bashrc_backup"
 cp .bashrc .bashrc_backup
@@ -34,7 +34,7 @@ diff .bashrc_backup .bashrc
 echo "Setting new .bashrc as source"
 source .bashrc
 
-DROPBOX_DEFAULT_LOCATION="/home/$USER/Dropbox"
+DROPBOX_DEFAULT_LOCATION="~/Dropbox"
 
 if [ -d "$DROPBOX_DEFAULT_LOCATION" ]; then
 	echo "Dropbox found at default location: $DROPBOX_DEFAULT_LOCATION"
