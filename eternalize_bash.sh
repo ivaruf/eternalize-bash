@@ -29,9 +29,6 @@ PROMPT_COMMAND=\"history -a; history -c; history -r; \$PROMPT_COMMAND\""
 echo "Appending eternal bash snippet to .bashrc"
 echo "${ETERNAL_BASH_SNIPPET}" >> .bashrc
 
-echo "Setting new .bashrc as source"
-source .bashrc
-
 DROPBOX_DEFAULT_LOCATION=~/Dropbox/
 
 if [ -d "$DROPBOX_DEFAULT_LOCATION" ]; then
@@ -44,3 +41,6 @@ if [ -d "$DROPBOX_DEFAULT_LOCATION" ]; then
 else
   echo "Dropbox not found, not adding symlink"
 fi
+
+echo "Setting new .bashrc as source"
+source .bashrc
