@@ -3,13 +3,12 @@
 # go to home directoy
 cd
 
+if [ -f .bash_eternal_history ]; then
+  echo "It looks like script has already been run, no changes will be made."
+  exit 1
+fi
+
 if [ -f .bashrc ]; then
-
-  if grep -q "bash_eternal_history" ".bashrc"; then
-    echo "It looks like script has already been run, no changes will be made."
-    exit 1
-  fi
-
   echo "Making a copy of your .bashrc file to .bashrc_backup."
   cp .bashrc .bashrc_backup
   echo "Comment out old occurances of HISTSIZE and HISTFILESIZE."
