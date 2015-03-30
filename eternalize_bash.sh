@@ -48,5 +48,9 @@ else
   echo "Dropbox not found, not adding link"
 fi
 
+if [ -f .bash_history ]; then
+  cat .bash_history >> .bash_eternal_history
+fi
+
 echo "Setting new .bashrc as source"
 source .bashrc
