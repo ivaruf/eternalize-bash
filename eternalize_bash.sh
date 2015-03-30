@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# go to home directoy
+# go to home directory
 cd
 
 if [ -f .bash_eternal_history ]; then
