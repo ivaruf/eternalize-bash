@@ -8,13 +8,14 @@ Run the eternalize-bash-script, and you will get distributed eternal bash histor
 ```
 
 ##Requirements
-* Enviroment that uses .bashrc in a home folder on the format /home/$USER. If you for example run Ubuntu and
-use default settings, this will work.
+One of the following:
+* Linux with bash shell
+* Mac with bash shell
+* Windows with git-bash
+
+Optional:
 * Dropbox, installed in default location. The script will run without it, but it will only give you distributed
 bash history between terminals on one machine.
-
-##Alternate install
-If you do not want to run the script, find the changes you need in eternal_bash_history.txt and add them manually to your .bashrc file (should also work to use this in a .bash_profile file for mac users, feedback welcome).
 
 ##Disclaimer
 This is experimental stuff, I have tried to make the script so that there is very little chance it will break
