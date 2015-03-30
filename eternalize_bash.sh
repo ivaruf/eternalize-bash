@@ -43,9 +43,9 @@ if [ -d "$DROPBOX_DEFAULT_LOCATION" ]; then
   mkdir -p  ${DROPBOX_DEFAULT_LOCATION}/linux_dot/
   touch ${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history
   ln ${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history .bash_eternal_history
-  echo "~/.bash_eternal_history -> ${DROPBOX_DEFAULT_LOCATION}linux_dot/.bash_eternal_history"
+  echo "Made link ~/.bash_eternal_history -> ${DROPBOX_DEFAULT_LOCATION}linux_dot/.bash_eternal_history"
 else
-  echo "Dropbox not found, not adding symlink"
+  echo "Dropbox not found, not adding link"
 fi
 
 echo "Setting new .bashrc as source"
