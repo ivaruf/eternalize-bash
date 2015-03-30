@@ -51,6 +51,3 @@ if [ -f .bash_history ]; then
   echo "Old history file found, appending it to the new one."
   cat .bash_history >> .bash_eternal_history
 fi
-
-echo "Setting new .bashrc as source."
-source .bashrc

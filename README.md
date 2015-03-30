@@ -6,6 +6,7 @@ Run the eternalize-bash-script, and you will get distributed eternal bash histor
 ```bash
 ./eternalize-bash.sh
 ```
+Restart your shell for changes to take effect (or run "source .bashrc")
 
 ##Requirements
 One of the following:
