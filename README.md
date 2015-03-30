@@ -1,7 +1,7 @@
 #eternalize-bash
 Eternalize-bash is a script that will make your bash history distributed between open terminals and even between machines, if you have Dropbox and run the script on all machines.
 
-Run the eternalize-bash-script, and you will get distributed eternal bash history happiness.
+Run the eternalize-bash-script, and you will get distributed eternal bash history happiness ☯
 
 ```bash
 ./eternalize-bash.sh
