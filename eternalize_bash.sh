@@ -42,5 +42,6 @@ if [ -d "$DROPBOX_DEFAULT_LOCATION" ]; then
   fi
 else
   echo "Dropbox not found, history file is set to ~/.bash_eternal_history"
+  cat .bash_history >> ~/.bash_eternal_history
   echo export HISTFILE=~/.bash_eternal_history >> .bashrc
 fi
