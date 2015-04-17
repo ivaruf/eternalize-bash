@@ -23,7 +23,7 @@ export HISTTIMEFORMAT=\"[%F %T] \"
 # Force prompt to write history after every command. See 'help history'
 PROMPT_COMMAND=\"history -a; history -c; history -r; \$PROMPT_COMMAND\""
 
-echo ${ETERNAL_BASH_SNIPPET} >> .bashrc
+echo "${ETERNAL_BASH_SNIPPET}" >> .bashrc
 
 DROPBOX_DEFAULT_LOCATION=~/Dropbox
 
