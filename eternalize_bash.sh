@@ -25,7 +25,7 @@ PROMPT_COMMAND=\"history -a; history -c; history -r; \$PROMPT_COMMAND\""
 
 echo ${ETERNAL_BASH_SNIPPET} >> .bashrc
 
-DROPBOX_DEFAULT_LOCATION=~/Dropbox/
+DROPBOX_DEFAULT_LOCATION=~/Dropbox
 
 if [ -d "$DROPBOX_DEFAULT_LOCATION" ]; then
   echo "Dropbox found at default location: $DROPBOX_DEFAULT_LOCATION"
@@ -36,7 +36,7 @@ if [ -d "$DROPBOX_DEFAULT_LOCATION" ]; then
     echo "Setting HISTFILE to ${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history"
     echo export HISTFILE=${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history >> .bashrc
   else
-    echo "Making link ~/.bash_eternal_history -> ${DROPBOX_DEFAULT_LOCATION}linux_dot/.bash_eternal_history."
+    echo "Making link ~/.bash_eternal_history -> ${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history."
     echo export HISTFILE=~/.bash_eternal_history >> .bashrc
     ln -s ${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history .bash_eternal_history
   fi
