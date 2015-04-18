@@ -4,7 +4,7 @@ BASH_RC=.bashrc
 DROPBOX_DEFAULT_LOCATION=~/Dropbox
 DROPBOX_FOLDER=linux_dot
 HISTFILE_NAME=.bash_eternal_history
-OLD_HISTORY=${HISTFILE}
+OLD_HISTORY=.bash_history
 
 # go to home directory
 cd
