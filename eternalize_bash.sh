@@ -33,6 +33,7 @@ if [ -d "$DROPBOX_DEFAULT_LOCATION" ]; then
   cat .bash_history >> ${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history
   # Check if running windows, symlink will not work there.
   if [ -n "$WINDIR" ]; then
+    echo "Windows detected."
     echo "Setting HISTFILE to ${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history"
     echo export HISTFILE=${DROPBOX_DEFAULT_LOCATION}/linux_dot/.bash_eternal_history >> .bashrc
   else
