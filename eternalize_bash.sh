@@ -55,4 +55,4 @@ else
 fi
 
 echo "Appending .bash_history to ${HISTFILE_LOCATION}"
-cat .bash_history >> ${HISTFILE_LOCATION}
+cat ~/.bash_history >> ${HISTFILE_LOCATION}
