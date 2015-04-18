@@ -4,6 +4,7 @@ BASH_RC=.bashrc
 DROPBOX_DEFAULT_LOCATION=~/Dropbox
 DROPBOX_FOLDER=linux_dot
 HISTFILE_NAME=.bash_eternal_history
+OLD_HISTORY=${HISTFILE}
 
 # go to home directory
 cd
@@ -54,5 +55,7 @@ else
   echo HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
 fi
 
-echo "Appending .bash_history to ${HISTFILE_LOCATION}"
-cat ~/.bash_history >> ${HISTFILE_LOCATION}
+if [ -f ${OLD_HISTORY} ]; then
+  echo "Appending ${OLD_HISTORY} to ${HISTFILE_LOCATION}"
+  cat ${OLD_HISTORY} >> ${HISTFILE_LOCATION}
+fi
