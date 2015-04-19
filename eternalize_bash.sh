@@ -60,7 +60,8 @@ if [ -f ${OLD_HISTORY} ]; then
   cat ${OLD_HISTORY} >> ${HISTFILE_LOCATION}
 fi
 
+# OS X does not automatically run .bashrc, add it as source to .bash_profile.
 if [ "${TERM_PROGRAM}" == "Apple_Terminal" ]; then
-  echo "OS X detected, adding source to .bashrc in .bash_profile"
+  echo "OS X detected, adding source to ${BASH_RC} in .bash_profile"
   echo source ~/${BASH_RC} >> .bash_profile
 fi
