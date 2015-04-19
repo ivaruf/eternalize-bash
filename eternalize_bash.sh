@@ -59,3 +59,8 @@ if [ -f ${OLD_HISTORY} ]; then
   echo "Appending ${OLD_HISTORY} to ${HISTFILE_LOCATION}"
   cat ${OLD_HISTORY} >> ${HISTFILE_LOCATION}
 fi
+
+if [ "${TERM_PROGRAM}" == "Apple_Terminal" ]; then
+  echo "OS X detected, adding source to .bashrc in .bash_profile"
+  echo source ~/${BASH_RC} >> .bash_profile
+fi
