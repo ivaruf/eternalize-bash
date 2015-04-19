@@ -52,7 +52,7 @@ if [ -d "${DROPBOX_DEFAULT_LOCATION}" ]; then
 else
   HISTFILE_LOCATION=~/${HISTFILE_NAME}
   echo "Dropbox not found, history file is set to ${HISTFILE_LOCATION}"
-  echo HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
+  echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
 fi
 
 if [ -f ${OLD_HISTORY} ]; then
