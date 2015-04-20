@@ -16,6 +16,9 @@ if [ -f ${BASH_RC} ]; then
   fi
   echo "Making a copy of your ${BASH_RC} file to ${BASH_RC}_backup."
   cp ${BASH_RC} ${BASH_RC}_backup
+  echo "Comment out old occurances of HISTSIZE and HISTFILESIZE."
+  sed -i s/^HISTSIZE\=/#HISTSIZE\=/g ${BASH_RC}
+  sed -i s/^HISTFILESIZE\=/#HISTFILESIZE\=/g ${BASH_RC}
 fi
 
 ETERNAL_BASH_SNIPPET="
