@@ -3,9 +3,11 @@ Eternalize-bash is a script that will make your bash history distributed between
 
 Run the eternalize-bash-script, and you will get distributed eternal bash history happiness ☯
 
+Can be done without cloning the project:
 ```bash
-./eternalize-bash.sh
+curl -s https://raw.githubusercontent.com/ivaruf/eternalize-bash/master/eternalize_bash.sh | bash
 ```
+
 Restart your shell for changes to take effect (or run "source .bashrc")
 
 ##Requirements
