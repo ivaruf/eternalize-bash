@@ -1,5 +1,22 @@
 #!/bin/bash
 
+case $(uname) in
+    Linux) OPERATING_SYSTEM=Linux;;
+    Darwin) OPERATING_SYSTEM=Mac;;
+    *) OPERATING_SYSTEM=Windows;;
+esac
+
+echo ${OPERATING_SYSTEM}
+
+echo "Do you wish to install this program?"
+select option in "Yes" "No"; do
+    case $option in
+        Yes) break;;
+        No ) exit;;
+    esac
+    echo "Type (number) + enter to select"
+done
+
 BASH_RC=.bashrc
 DROPBOX_DEFAULT_LOCATION=~/Dropbox
 DROPBOX_FOLDER=linux_dot
