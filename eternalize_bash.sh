@@ -1,14 +1,33 @@
 #!/bin/bash
 
+cat <<"BANNER"
+     _____                          __________
+_______  /_________________________ ___  /__(_)__________
+_  _ \  __/  _ \_  ___/_  __ \  __ `/_  /__  /___  /_  _ \
+/  __/ /_ /  __/  /   _  / / / /_/ /_  / _  / __  /_/  __/
+\___/\__/ \___//_/    /_/ /_/\__,_/ /_/  /_/  _____/\___/
+
+____________               ______
+____/ /__  /_______ __________  /_
+__  __/_  __ \  __ `/_  ___/_  __ \
+_(_  )_  /_/ / /_/ /_(__  )_  / / /
+/  _/ /_.___/\__,_/ /____/ /_/ /_/
+/_/
+BANNER
+
+# Colors
+red='\033[0;31m'
+NC='\033[0m' # No Color
+
 case $(uname) in
     Linux) OPERATING_SYSTEM=Linux;;
     Darwin) OPERATING_SYSTEM=Mac;;
     *) OPERATING_SYSTEM=Windows;;
 esac
 
-echo ${OPERATING_SYSTEM}
+echo -e "${red}${OPERATING_SYSTEM}"
 
-echo "Do you wish to install this program?"
+echo "Select and option:"
 select option in "Yes" "No"; do
     case $option in
         Yes) break;;
@@ -17,11 +36,14 @@ select option in "Yes" "No"; do
     echo "Type (number) + enter to select"
 done
 
+#USE if [ -L ${file} to check if symlink ]
+
 BASH_RC=.bashrc
 DROPBOX_DEFAULT_LOCATION=~/Dropbox
 DROPBOX_FOLDER=linux_dot
 HISTFILE_NAME=.bash_eternal_history
 OLD_HISTORY=.bash_history
+VERSION=0.0.1
 
 # go to home directory
 cd
@@ -39,7 +61,7 @@ if [ -f ${BASH_RC} ]; then
 fi
 
 ETERNAL_BASH_SNIPPET="
-# Eternal bash history.
+# Eternal bash history - version : ${VERSION}
 # ---------------------
 # Undocumented feature which sets the size to 'unlimited'.
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
