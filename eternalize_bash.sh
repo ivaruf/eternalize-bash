@@ -76,7 +76,7 @@ function uninstall() {
     sed -n "${STARTLINE},${ENDLINE}p" ${BASH_RC}
     select option in "Proceed" "Cancel"; do
         case ${option} in
-            Proceed) sed "${STARTLINE},${ENDLINE}d" ${BASH_RC};break;;  #sed -i "${STARTLINE},${ENDLINE}d" ${BASH_RC}
+            Proceed) sed "${STARTLINE},${ENDLINE}d" ${BASH_RC};break;;  # TODO - enable  (add -i)
             Cancel ) change_menu;;
         esac
     done
@@ -86,7 +86,11 @@ function uninstall() {
 }
 
 function unlink_from_dropbox() {
-    echo "Unlink"
+    printf "\nMoving ${HISTPATH} to ~/${HISTFILE_NAME} ${colorless} \n"
+    # cp ${HISTPATH} ${HISTFILE_NAME} # TODO Enable =)
+    sed 's/${HISTPATH}/${HISTFILE_NAME}/' ${BASH_RC} # TODO add -i
+    printf "${green}Update OK${colorless}\n"
+    exit 0;
 }
 
 function link_to_dropbox() {
@@ -109,6 +113,8 @@ function change_menu() {
             DBOXOPTION=Unlink;;
         *)  DBOXOPTION=Link;;
     esac
+
+    printf "\n"
 
     select option in "Uninstall" "${DBOXOPTION} from dropbox" "Exit"; do
         case ${option} in
@@ -147,7 +153,6 @@ function append_snippet() {
     # Important with quotes here, so the snippet will retain line-breaks
     echo "${ETERNAL_BASH_SNIPPET}" >> ${BASH_RC}
 }
-
 
 ### TODO Moving this to link to dropbox
 if [ -d "${DROPBOX_DEFAULT_LOCATION}" ]; then
