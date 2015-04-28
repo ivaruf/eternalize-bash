@@ -29,6 +29,14 @@ green='\033[0;32m'
 cyan='\033[1;36m'
 colorless='\033[0m'
 
+function isSymlink() {
+    if [ -L $1 ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 printf "\nHistory file currently set to:\n"
 printf "${cyan}${CURRENT_HISTFILE}${colorless}"
 if isSymlink ${CURRENT_HISTFILE}; then
@@ -49,14 +57,6 @@ case $(uname) in
     Darwin) OS=Mac;;
     *) check_if_windows;;
 esac
-
-function isSymlink() {
-    if [ -L $1 ]; then
-        return 0
-    else
-        return 1
-    fi
-}
 
 function check_if_windows() {
     if [ -n "${WINDIR}" ]; then
