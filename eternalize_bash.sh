@@ -29,6 +29,23 @@ green='\033[0;32m'
 cyan='\033[1;36m'
 colorless='\033[0m'
 
+# go to home directory
+cd
+
+case $(uname) in
+    Linux) OS=Linux;;
+    Darwin) OS=Mac;;
+    *) check_if_windows;;
+esac
+
+function check_if_windows() {
+    if [ -n "${WINDIR}" ]; then
+        OS=Windows
+    else
+        OS=Unknown
+    fi
+}
+
 function isSymlink() {
     if [ -L $1 ]; then
         return 0
@@ -48,23 +65,6 @@ else
 fi
 
 printf "\n\n"
-
-# go to home directory
-cd
-
-case $(uname) in
-    Linux) OS=Linux;;
-    Darwin) OS=Mac;;
-    *) check_if_windows;;
-esac
-
-function check_if_windows() {
-    if [ -n "${WINDIR}" ]; then
-        OS=Windows
-    else
-        OS=Unknown
-    fi
-}
 
 printf "${green}Operating system: ${OS}${colorless}\n\n"
 
@@ -99,7 +99,12 @@ function uninstall() {
 function unlink_from_dropbox() {
     printf "\n"
     printf "Moving ${HISTPATH} to ~/${HISTFILE_NAME} ${colorless}\n"
-    cp -f ${HISTPATH} ${HISTFILE_NAME}
+
+    if isSymlink ${HISTFILE_NAME}; then
+        rm ${HISTFILE_NAME};
+    fi
+
+    cp ${HISTPATH} ${HISTFILE_NAME}
     sed -i 's/${HISTPATH}/${HISTFILE_NAME}/' ${BASH_RC}
     printf "${green}Update OK${colorless}\n"
     exit 0
