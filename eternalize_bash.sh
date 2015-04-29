@@ -64,10 +64,9 @@ function isSymlink() {
     fi
 }
 
-if [ ! -n "${HISTFILE}" ]; then
-    printf "HISTFILE env variable not set, using .bash_history"
-    HISTFILE=~/.bash_history
-    export HISTFILE
+if [ ! ${HISTFILE} ]; then
+    printf "\nHISTFILE env variable not set, using .bash_history\n"
+    export HISTFILE=~/.bash_history
 fi
 
 printf "\nHistory file currently set to:\n"
