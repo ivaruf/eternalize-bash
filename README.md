@@ -1,4 +1,16 @@
-#eternalize-bash
+         _____                          __________
+    _______  /_________________________ ___  /__(_)__________
+    _  _ \  __/  _ \_  ___/_  __ \  __ `/_  /__  /___  /_  _ \
+    /  __/ /_ /  __/  /   _  / / / /_/ /_  / _  / __  /_/  __/
+    \___/\__/ \___//_/    /_/ /_/\__,_/ /_/  /_/  _____/\___/
+
+    ____________               ______
+    ____/ /__  /_______ __________  /_
+    __  __/_  __ \  __ `/_  ___/_  __ \
+    _(_  )_  /_/ / /_/ /_(__  )_  / / /
+    /  _/ /_.___/\__,_/ /____/ /_/ /_/
+    /_/
+
 Eternalize-bash is a script that will make your bash history distributed between open terminals and even between machines, if you have Dropbox and run the script on all machines.
 
 Run the eternalize-bash-script, and you will get distributed eternal bash history happiness ☯
