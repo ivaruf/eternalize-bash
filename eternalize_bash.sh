@@ -78,7 +78,6 @@ printf "\n\n"
 
 printf "${green}Operating system: ${OS}${colorless}\n\n"
 
-# TODO When unlinking / linking to dropbox, we forget to remove the old.
 function uninstall() {
     STARTLINE=`grep -n  "# Eternal bash history" ${BASH_RC} | cut -d ":" -f1`
     ENDLINE=`grep -n  "/${HISTFILE_NAME}" ${BASH_RC} | cut -d ":" -f1`
@@ -103,6 +102,7 @@ function uninstall() {
         sed -i 'source ~\/${BASH_RC}/d' ${BASH_PROFILE}
     fi
 
+    append_old_history ~/.bash_history
     # Script wont be able to find the HISTFILE variable again, if not exported.
     export HISTFILE=~/.bash_history
 
@@ -123,9 +123,8 @@ function unlink_from_dropbox() {
     exit 0
 }
 
-# TODO ignore comments in old history?
-append_old_history() {
-    printf "Appending all distinct lines from old history to new history\n"
+function append_old_history() {
+    printf "Appending all distinct lines from old history-file to new history-file\n"
     while read line; do
         if ! grep -q "${line}" $1; then
           echo ${line} >> $1
@@ -139,7 +138,11 @@ function link_to_dropbox() {
 
     if [ ${OS} = "Windows" ]; then
         printf "Setting HISTFILE to ${HISTFILE_LOCATION} in ${BASH_RC}\n"
-        echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
+        if grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
+            echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
+        else
+            sed -i 's/${HISTPATH}/${HISTFILE_LOCATION}/' ${BASH_RC}
+        fi
     else
         printf "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}\n"
         touch ${HISTFILE_LOCATION}
@@ -150,7 +153,11 @@ function link_to_dropbox() {
         # Force symlink file might exist if first installed locally, then linked to dropbox
         ln -sf ${HISTFILE_LOCATION} ${HISTFILE_NAME}
         printf "Setting HISTFILE to ~/${HISTFILE_NAME} in ${BASH_RC}\n"
-        echo export HISTFILE=~/${HISTFILE_NAME} >> ${BASH_RC}
+
+        # Only export HISTFILE if it has not been done.
+        if ! grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
+            echo export HISTFILE=~/${HISTFILE_NAME} >> ${BASH_RC}
+        fi
     fi
 
     printf "${green}Successfuly installed! You now have *distributed* eternal history.${colorless}\n"
