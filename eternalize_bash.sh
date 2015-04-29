@@ -21,7 +21,6 @@ BASH_PROFILE=.bash_profile
 DROPBOX_DEFAULT_LOCATION=~/Dropbox
 DROPBOX_FOLDER=linux_dot
 HISTFILE_NAME=.bash_eternal_history
-CURRENT_HISTFILE=${HISTFILE}
 
 # Colors
 red='\033[0;31m'
@@ -56,14 +55,13 @@ function isSymlink() {
 }
 
 printf "\nHistory file currently set to:\n"
-printf "${cyan}${CURRENT_HISTFILE}${colorless}"
-# TODO - this seems to be broken --- when there is no symlink?
-if isSymlink ${CURRENT_HISTFILE}; then
+printf "${cyan}${HISTFILE}${colorless}"
+if isSymlink ${HISTFILE}; then
     printf " -> "
-    HISTPATH=$(readlink -f ${CURRENT_HISTFILE})
+    HISTPATH=$(readlink -f ${HISTFILE})
     printf ${HISTPATH}
 else
-    HISTPATH=${CURRENT_HISTFILE}
+    HISTPATH=${HISTFILE}
 fi
 
 printf "\n\n"
@@ -119,7 +117,7 @@ append_old_history() {
         if ! grep -q "${line}" $1; then
           echo ${line} >> $1
         fi
-    done <${CURRENT_HISTFILE}
+    done <${HISTFILE}
 }
 
 function link_to_dropbox() {
