@@ -233,7 +233,8 @@ function local_install() {
     common_install
     HISTFILE_LOCAITON=~/${HISTFILE_NAME}
     append_old_history ${HISTFILE_LOCATION}
-
+    printf "histfile location ... is ${HISTFILE_LOCAITON}"
+    # Local install is broken? for some reason this might be empty
     echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
     printf "${green}Successfuly installed! You now have eternal history on this machine.${colorless}\n"
     printf "${red}Remember to restart your shell!${colorless}\n"
