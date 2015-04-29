@@ -93,6 +93,7 @@ function uninstall() {
         sed -i 'source ~\/${BASH_RC}/d' ${BASH_PROFILE}
     fi
 
+    # Script wont be able to find the HISTFILE variable again, if not exported.
     export HISTFILE=~/.bash_history
 
     printf "${green}Successfuly uninstalled, your bash is now boring again.${colorless}\n"
@@ -191,14 +192,14 @@ function comment_default_history_variables() {
 
 function append_snippet() {
     ETERNAL_BASH_SNIPPET="
-    # Eternal bash history
-    # ---------------------
-    # Undocumented feature which sets the size to 'unlimited'.
-    # http://stackoverflow.com/questions/9457233/unlimited-bash-history
-    export HISTFILESIZE=
-    export HISTSIZE=
-    # Force prompt to write history after every command. See 'help history'
-    PROMPT_COMMAND=\"history -a; history -c; history -r; \${PROMPT_COMMAND}\""
+# Eternal bash history
+# ---------------------
+# Undocumented feature which sets the size to 'unlimited'.
+# http://stackoverflow.com/questions/9457233/unlimited-bash-history
+export HISTFILESIZE=
+export HISTSIZE=
+# Force prompt to write history after every command. See 'help history'
+PROMPT_COMMAND=\"history -a; history -c; history -r; \${PROMPT_COMMAND}\""
 
     # Important with quotes here, so the snippet will retain line-breaks
     echo "${ETERNAL_BASH_SNIPPET}" >> ${BASH_RC}
