@@ -64,6 +64,12 @@ function isSymlink() {
     fi
 }
 
+if [ ! -n "${HISTFILE}" ]; then
+    printf "HISTFILE env variable not set, using .bash_history"
+    HISTFILE=~/.bash_history
+    export HISTFILE
+fi
+
 printf "\nHistory file currently set to:\n"
 printf "${cyan}${HISTFILE}${colorless}"
 if isSymlink ${HISTFILE}; then
@@ -103,8 +109,6 @@ function uninstall() {
     fi
 
     append_old_history ~/.bash_history
-    # Script wont be able to find the HISTFILE variable again, if not exported.
-    export HISTFILE=~/.bash_history
 
     printf "${green}Successfuly uninstalled, your bash is now boring again.${colorless}\n"
     exit 0
