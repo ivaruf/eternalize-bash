@@ -109,6 +109,7 @@ function unlink_from_dropbox() {
     exit 0
 }
 
+# TODO ignore comments in old history?
 append_old_history() {
     printf "Appending all distinct lines from old history to new history\n"
     while read line; do
@@ -193,7 +194,6 @@ function append_snippet() {
     # http://stackoverflow.com/questions/9457233/unlimited-bash-history
     export HISTFILESIZE=
     export HISTSIZE=
-    export HISTTIMEFORMAT=\"[%F %T] \"
     # Force prompt to write history after every command. See 'help history'
     PROMPT_COMMAND=\"history -a; history -c; history -r; \${PROMPT_COMMAND}\""
 
