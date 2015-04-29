@@ -17,10 +17,10 @@ BANNER
 
 # Variables
 BASH_RC=.bashrc
+BASH_PROFILE=.bash_profile
 DROPBOX_DEFAULT_LOCATION=~/Dropbox
 DROPBOX_FOLDER=linux_dot
 HISTFILE_NAME=.bash_eternal_history
-OLD_HISTORY=.bash_history
 CURRENT_HISTFILE=${HISTFILE}
 
 # Colors
@@ -76,28 +76,65 @@ function uninstall() {
     sed -n "${STARTLINE},${ENDLINE}p" ${BASH_RC}
     select option in "Proceed" "Cancel"; do
         case ${option} in
-            Proceed) sed "${STARTLINE},${ENDLINE}d" ${BASH_RC};break;;  # TODO - enable  (add -i)
+            Proceed) break;;
             Cancel ) change_menu;;
         esac
     done
 
+    # Remove eternal bash config from .bashrc
+    sed -i "${STARTLINE},${ENDLINE}d" ${BASH_RC};
+    # Restore previous HISTSIZE and HISTFILESIZE variables
+    sed -i s/^#HISTSIZE\=/HISTSIZE\=/g ${BASH_RC}
+    sed -i s/^#HISTFILESIZE\=/HISTFILESIZE\=/g ${BASH_RC}
+
+    # Remove changes in .bash_profile on Mac
+    if [ ${OS} = "Mac" ]; then
+        sed -i 'source ~\/${BASH_RC}/d' ${BASH_PROFILE}
+    fi
+
     printf "${green}Successfuly uninstalled, your bash is now boring again.${colorless}\n"
-    exit
+    exit 0
 }
 
 function unlink_from_dropbox() {
-    printf "\nMoving ${HISTPATH} to ~/${HISTFILE_NAME} ${colorless} \n"
-    # cp ${HISTPATH} ${HISTFILE_NAME} # TODO Enable =)
-    sed 's/${HISTPATH}/${HISTFILE_NAME}/' ${BASH_RC} # TODO add -i
+    printf "\n"
+    printf "Moving ${HISTPATH} to ~/${HISTFILE_NAME} ${colorless}\n"
+    cp ${HISTPATH} ${HISTFILE_NAME}
+    sed -i 's/${HISTPATH}/${HISTFILE_NAME}/' ${BASH_RC}
     printf "${green}Update OK${colorless}\n"
-    exit 0;
+    exit 0
+}
+
+
+append_old_history() {
+    printf "Appending all lines not in $1 from ${CURRENT_HISTFILE}\n"
+    while read line; do
+        if ! grep -q "${line}" $1; then
+          echo ${line} >> $1
+        fi
+    done <${CURRENT_HISTFILE}
 }
 
 function link_to_dropbox() {
-    echo "Link"
+    mkdir -p  ${DROPBOX_DEFAULT_LOCATION}/${DROPBOX_FOLDER}/
+    HISTFILE_LOCATION=${DROPBOX_DEFAULT_LOCATION}/${DROPBOX_FOLDER}/${HISTFILE_NAME}
+
+    if [ ${OS} = "Windows" ]; then
+        printf "Setting HISTFILE to ${HISTFILE_LOCATION} in ${BASH_RC}\n"
+        echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
+    else
+        printf "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}\n"
+        touch ${HISTFILE_LOCATION}
+        ln -s ${HISTFILE_LOCATION} ${HISTFILE_NAME}
+        printf "Setting HISTFILE to ~/${HISTFILE_NAME} in ${BASH_RC}\n"
+        echo export HISTFILE=~/${HISTFILE_NAME} >> ${BASH_RC}
+    fi
+
+    append_old_history ${HISTFILE_LOCATION}
 }
 
 function toggle_dropbox() {
+    printf "\n"
     case $1 in
         Unlink) unlink_from_dropbox;;
         Link) link_to_dropbox;;
@@ -130,17 +167,13 @@ function make_bash_rc_backup() {
   cp ${BASH_RC} ${BASH_RC}_backup
 }
 
-if [ -f ${BASH_RC} ]; then
-  if grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
-    change_menu
-  fi
-  exit #devguard
-
+function comment_default_history_variables() {
   # Unless we remove / comment theese lines from default ubuntu install
   # HISTFILE will still be truncated at 2000 lines (even if it was much bigger!)
   sed -i s/^HISTSIZE\=/#HISTSIZE\=/g ${BASH_RC}
   sed -i s/^HISTFILESIZE\=/#HISTFILESIZE\=/g ${BASH_RC}
-fi
+
+}
 
 function append_snippet() {
     ETERNAL_BASH_SNIPPET="
@@ -158,40 +191,64 @@ function append_snippet() {
     echo "${ETERNAL_BASH_SNIPPET}" >> ${BASH_RC}
 }
 
-### TODO Moving this to link to dropbox
-if [ -d "${DROPBOX_DEFAULT_LOCATION}" ]; then
-  echo "Dropbox found at default location: ${DROPBOX_DEFAULT_LOCATION}"
-  HISTFILE_LOCATION=${DROPBOX_DEFAULT_LOCATION}/${DROPBOX_FOLDER}/${HISTFILE_NAME}
-  mkdir -p  ${DROPBOX_DEFAULT_LOCATION}/${DROPBOX_FOLDER}/
+function common_install() {
+    make_bash_rc_backup
+    comment_default_history_variables
+    append_snippet
 
-  # Check if running windows, symlink will not work there.
-  if [ -n "${WINDIR}" ]; then
-    echo "Windows detected"
-    echo "Setting HISTFILE to ${HISTFILE_LOCATION} in ${BASH_RC}"
+    if [ ${OS} = "Mac" ]; then
+        printf "Adding source to .bashrc in .bash_profile\n"
+        echo source ~/${BASH_RC} >> ${BASH_PROFILE}
+    fi
+
+    printf "History variables and command-promt setup added to ${BASH_RC}\n"
+    printf "History file is set to ~/${HISTFILE_NAME}\n"
+}
+
+function local_install() {
+    common_install
+    HISTFILE_LOCAITON=~/${HISTFILE_NAME}
+    append_old_history ${HISTFILE_LOCATION}
+
     echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
-  else
-    echo "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}"
-    touch ${HISTFILE_LOCATION}
-    ln -s ${HISTFILE_LOCATION} ${HISTFILE_NAME}
-    echo "Setting HISTFILE to ~/${HISTFILE_NAME} in ${BASH_RC}"
-    echo export HISTFILE=~/${HISTFILE_NAME} >> ${BASH_RC}
+    printf "${green}Successfuly installed! You now have eternal history on this machine.${colorless}\n"
+    printf "${red}Remember to restart your shell!${colorless}"
+
+    exit 0
+}
+
+function dropbox_install() {
+    if ! [[ -d "${DROPBOX_DEFAULT_LOCATION}" ]]; then
+        print "${red}Dropbox not found!${colorless}\n"
+        menu
+    else
+        common_install
+        link_to_dropbox
+    fi
+    printf "${green}Successfuly installed! You now have *distributed* eternal history.${colorless}\n"
+    printf "${red}Remember to restart your shell!${colorless}"
+    exit 0
+}
+
+function menu() {
+    printf "{green}Installation can be changed later by re-running script${colorless}\n"
+    printf "What would you like to do? \n"
+
+    select option in "Install locally" "Install with Dropbox" "Exit"; do
+        case ${option} in
+            "Install locally") local_install;;
+            "Install with Dropbox") dropbox_install;;
+            Exit ) exit 0;;
+        esac
+    done
+}
+
+# If .bashrc exist and we find .bash_eternal_histor in it, we open the change menu
+if [ -f ${BASH_RC} ]; then
+  if grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
+    change_menu
   fi
-else
-  ### TODO Move this to unlink
-  HISTFILE_LOCATION=~/${HISTFILE_NAME}
-  echo "Dropbox not found, history file is set to ${HISTFILE_LOCATION}"
-  echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
 fi
 
-### TODO read each line of ${CURREN_HISTFILE} append this NOT in ${HISTFILE_LOCATION}
-if [ -f ${CURRENT_HISTFILE} ]; then
-  echo "Appending ${CURRENT_HISTFILE} to ${HISTFILE_LOCATION}"
-  cat ${CURRENT_HISTFILE} >> ${HISTFILE_LOCATION}
-fi
-
-### TODO move this to function
-# OS X does not automatically run .bashrc, add it as source to .bash_profile.
-if [ $(uname) = "Darwin" ]; then
-  echo "OS X detected, adding source to ${BASH_RC} in .bash_profile"
-  echo source ~/${BASH_RC} >> .bash_profile
-fi
+# Start main menu
+menu
