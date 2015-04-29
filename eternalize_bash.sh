@@ -26,6 +26,7 @@ CURRENT_HISTFILE=${HISTFILE}
 # Colors
 red='\033[0;31m'
 green='\033[0;32m'
+orange='\033[0;33m'
 cyan='\033[1;36m'
 colorless='\033[0m'
 
@@ -68,6 +69,7 @@ printf "\n\n"
 
 printf "${green}Operating system: ${OS}${colorless}\n\n"
 
+# TODO When unlinking / linking to dropbox, we forget to remove the old.
 function uninstall() {
     STARTLINE=`grep -n  "# Eternal bash history" ${BASH_RC} | cut -d ":" -f1`
     ENDLINE=`grep -n  "/${HISTFILE_NAME}" ${BASH_RC} | cut -d ":" -f1`
@@ -238,7 +240,7 @@ function dropbox_install() {
 }
 
 function menu() {
-    printf "{green}Installation can be changed later by re-running script${colorless}\n"
+    printf "${orange}Installation can be changed later by re-running script.${colorless}\n"
     printf "What would you like to do? \n"
 
     select option in "Install locally" "Install with Dropbox" "Exit"; do
