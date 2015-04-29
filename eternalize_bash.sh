@@ -129,12 +129,17 @@ function link_to_dropbox() {
     else
         printf "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}\n"
         touch ${HISTFILE_LOCATION}
-        ln -s ${HISTFILE_LOCATION} ${HISTFILE_NAME}
+
+        # Append history BEFORE linking, to avoid history-loss
+        append_old_history ${HISTFILE_LOCATION}
+
+        # Force symlink file might exist if first installed locally, then linked to dropbox
+        ln -sf ${HISTFILE_LOCATION} ${HISTFILE_NAME}
         printf "Setting HISTFILE to ~/${HISTFILE_NAME} in ${BASH_RC}\n"
         echo export HISTFILE=~/${HISTFILE_NAME} >> ${BASH_RC}
     fi
 
-    append_old_history ${HISTFILE_LOCATION}
+
 }
 
 function toggle_dropbox() {
