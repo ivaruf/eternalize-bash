@@ -22,6 +22,16 @@ DROPBOX_DEFAULT_LOCATION=~/Dropbox
 DROPBOX_FOLDER=linux_dot
 HISTFILE_NAME=.bash_eternal_history
 
+ETERNAL_BASH_SNIPPET="
+# Eternal bash history
+# ---------------------
+# Undocumented feature which sets the size to 'unlimited'.
+# http://stackoverflow.com/questions/9457233/unlimited-bash-history
+export HISTFILESIZE=
+export HISTSIZE=
+# Force prompt to write history after every command. See 'help history'
+PROMPT_COMMAND=\"history -a; history -c; history -r; \${PROMPT_COMMAND}\""
+
 # Colors
 red='\033[0;31m'
 green='\033[0;32m'
@@ -191,16 +201,6 @@ function comment_default_history_variables() {
 }
 
 function append_snippet() {
-    ETERNAL_BASH_SNIPPET="
-# Eternal bash history
-# ---------------------
-# Undocumented feature which sets the size to 'unlimited'.
-# http://stackoverflow.com/questions/9457233/unlimited-bash-history
-export HISTFILESIZE=
-export HISTSIZE=
-# Force prompt to write history after every command. See 'help history'
-PROMPT_COMMAND=\"history -a; history -c; history -r; \${PROMPT_COMMAND}\""
-
     # Important with quotes here, so the snippet will retain line-breaks
     echo "${ETERNAL_BASH_SNIPPET}" >> ${BASH_RC}
 }
