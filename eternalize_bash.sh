@@ -99,12 +99,11 @@ function uninstall() {
 function unlink_from_dropbox() {
     printf "\n"
     printf "Moving ${HISTPATH} to ~/${HISTFILE_NAME} ${colorless}\n"
-    cp ${HISTPATH} ${HISTFILE_NAME}
+    cp -f ${HISTPATH} ${HISTFILE_NAME}
     sed -i 's/${HISTPATH}/${HISTFILE_NAME}/' ${BASH_RC}
     printf "${green}Update OK${colorless}\n"
     exit 0
 }
-
 
 append_old_history() {
     printf "Appending all lines not in $1 from ${CURRENT_HISTFILE}\n"
