@@ -111,7 +111,7 @@ function unlink_from_dropbox() {
 }
 
 append_old_history() {
-    printf "Appending all lines not in $1 from ${CURRENT_HISTFILE}\n"
+    printf "Appending all distinct lines from old history to new history\n"
     while read line; do
         if ! grep -q "${line}" $1; then
           echo ${line} >> $1
@@ -139,7 +139,9 @@ function link_to_dropbox() {
         echo export HISTFILE=~/${HISTFILE_NAME} >> ${BASH_RC}
     fi
 
-
+    printf "${green}Successfuly installed! You now have *distributed* eternal history.${colorless}\n"
+    printf "${red}Remember to restart your shell!${colorless}"
+    exit 0
 }
 
 function toggle_dropbox() {
@@ -234,9 +236,6 @@ function dropbox_install() {
         common_install
         link_to_dropbox
     fi
-    printf "${green}Successfuly installed! You now have *distributed* eternal history.${colorless}\n"
-    printf "${red}Remember to restart your shell!${colorless}"
-    exit 0
 }
 
 function menu() {
