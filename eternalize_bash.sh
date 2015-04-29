@@ -39,8 +39,11 @@ orange='\033[0;33m'
 cyan='\033[1;36m'
 colorless='\033[0m'
 
-# go to home directory
-cd
+if [ ${HISTFILE} ]; then
+    CURRENT_HISTFILE=${HISTFILE}
+else
+    CURRENT_HISTFILE=~/.bash_history
+fi
 
 case $(uname) in
     Linux) OS=Linux;;
@@ -64,19 +67,14 @@ function isSymlink() {
     fi
 }
 
-if [ ! ${HISTFILE} ]; then
-    printf "\nHISTFILE env variable not set, using .bash_history\n"
-    export HISTFILE=~/.bash_history
-fi
-
 printf "\nHistory file currently set to:\n"
-printf "${cyan}${HISTFILE}${colorless}"
-if isSymlink ${HISTFILE}; then
+printf "${cyan}${CURRENT_HISTFILE}${colorless}"
+if isSymlink ${CURRENT_HISTFILE}; then
     printf " -> "
-    HISTPATH=$(readlink -f ${HISTFILE})
+    HISTPATH=$(readlink -f ${CURRENT_HISTFILE})
     printf ${HISTPATH}
 else
-    HISTPATH=${HISTFILE}
+    HISTPATH=${CURRENT_HISTFILE}
 fi
 
 printf "\n\n"
@@ -132,7 +130,7 @@ function append_old_history() {
         if ! grep -q "${line}" $1; then
           echo ${line} >> $1
         fi
-    done <${HISTFILE}
+    done <${CURRENT_HISTFILE}
 }
 
 function link_to_dropbox() {
@@ -207,7 +205,6 @@ function comment_default_history_variables() {
   # HISTFILE will still be truncated at 2000 lines (even if it was much bigger!)
   sed -i s/^HISTSIZE\=/#HISTSIZE\=/g ${BASH_RC}
   sed -i s/^HISTFILESIZE\=/#HISTFILESIZE\=/g ${BASH_RC}
-
 }
 
 function append_snippet() {
@@ -264,6 +261,9 @@ function menu() {
         esac
     done
 }
+
+# go to home directory
+cd
 
 # If .bashrc exist and we find .bash_eternal_histor in it, we open the change menu
 if [ -f ${BASH_RC} ]; then
