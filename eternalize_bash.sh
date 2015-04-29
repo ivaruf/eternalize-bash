@@ -136,6 +136,10 @@ if [ -f ${BASH_RC} ]; then
   fi
   exit #devguard
 
+  # Unless we remove / comment theese lines from default ubuntu install
+  # HISTFILE will still be truncated at 2000 lines (even if it was much bigger!)
+  sed -i s/^HISTSIZE\=/#HISTSIZE\=/g ${BASH_RC}
+  sed -i s/^HISTFILESIZE\=/#HISTFILESIZE\=/g ${BASH_RC}
 fi
 
 function append_snippet() {
