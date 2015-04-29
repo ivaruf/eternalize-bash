@@ -97,7 +97,6 @@ function uninstall() {
 }
 
 function unlink_from_dropbox() {
-    printf "\n"
     printf "Moving ${HISTPATH} to ~/${HISTFILE_NAME} ${colorless}\n"
 
     if isSymlink ${HISTFILE_NAME}; then
@@ -140,7 +139,7 @@ function link_to_dropbox() {
     fi
 
     printf "${green}Successfuly installed! You now have *distributed* eternal history.${colorless}\n"
-    printf "${red}Remember to restart your shell!${colorless}"
+    printf "${red}Remember to restart your shell!${colorless}\n"
     exit 0
 }
 
@@ -223,7 +222,7 @@ function local_install() {
 
     echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
     printf "${green}Successfuly installed! You now have eternal history on this machine.${colorless}\n"
-    printf "${red}Remember to restart your shell!${colorless}"
+    printf "${red}Remember to restart your shell!${colorless}\n"
 
     exit 0
 }
