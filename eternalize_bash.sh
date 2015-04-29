@@ -93,6 +93,8 @@ function uninstall() {
         sed -i 'source ~\/${BASH_RC}/d' ${BASH_PROFILE}
     fi
 
+    export HISTFILE=~/.bash_history
+
     printf "${green}Successfuly uninstalled, your bash is now boring again.${colorless}\n"
     exit 0
 }
