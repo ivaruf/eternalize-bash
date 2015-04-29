@@ -57,6 +57,7 @@ function isSymlink() {
 
 printf "\nHistory file currently set to:\n"
 printf "${cyan}${CURRENT_HISTFILE}${colorless}"
+# TODO - this seems to be broken --- when there is no symlink?
 if isSymlink ${CURRENT_HISTFILE}; then
     printf " -> "
     HISTPATH=$(readlink -f ${CURRENT_HISTFILE})
