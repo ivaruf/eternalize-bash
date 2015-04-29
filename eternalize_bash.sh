@@ -156,16 +156,16 @@ function change_menu() {
      # Check if path to "Dropbox" is in ${HISTPATH}
     case ${HISTPATH} in
         *Dropbox*)
-            DBOXOPTION=Unlink;;
-        *)  DBOXOPTION=Link;;
+            DBOXOPTION="Unlink from";;
+        *)  DBOXOPTION="Link to";;
     esac
 
     printf "\n"
 
-    select option in "Uninstall" "${DBOXOPTION} from dropbox" "Exit"; do
+    select option in "Uninstall" "${DBOXOPTION} dropbox" "Exit"; do
         case ${option} in
             Uninstall) uninstall;;
-            "${DBOXOPTION} from dropbox") toggle_dropbox ${DBOXOPTION};;
+            "${DBOXOPTION} dropbox") toggle_dropbox ${DBOXOPTION};;
             Exit ) exit;;
         esac
     done
