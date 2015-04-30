@@ -126,10 +126,19 @@ function unlink_from_dropbox() {
 
 function append_old_history() {
     printf "Appending all distinct lines from old history-file to new history-file\n"
+
+    # TODO : Fix theese errors when there are hypens or brackets in the history
+    # grep: Invalid range end
+    # grep: Unmatched [ or [^
+
     # In case file does not exists yet, can't grep an empty file
-    # This is very slow - might want to just append like before?
     touch $1
     while read line; do
+        # Ignore commented lines
+        if grep -q "^#" <<< "${line}"; then
+          continue
+        fi
+
         if ! grep -q "${line}" $1; then
           echo ${line} >> $1
         fi
