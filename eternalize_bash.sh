@@ -196,15 +196,15 @@ function change_menu() {
 }
 
 function make_bash_rc_backup() {
-  printf "Making a copy of your ${BASH_RC} file to ${BASH_RC}_backup.\n"
-  cp ${BASH_RC} ${BASH_RC}_backup
+    printf "Making a copy of your ${BASH_RC} file to ${BASH_RC}_backup.\n"
+    cp ${BASH_RC} ${BASH_RC}_backup
 }
 
 function comment_default_history_variables() {
-  # Unless we remove / comment theese lines from default ubuntu install
-  # HISTFILE will still be truncated at 2000 lines (even if it was much bigger!)
-  sed -i s/^HISTSIZE\=/#HISTSIZE\=/g ${BASH_RC}
-  sed -i s/^HISTFILESIZE\=/#HISTFILESIZE\=/g ${BASH_RC}
+    # Unless we remove / comment theese lines from default ubuntu install
+    # HISTFILE will still be truncated at 2000 lines (even if it was much bigger!)
+    sed -i s/^HISTSIZE\=/#HISTSIZE\=/g ${BASH_RC}
+    sed -i s/^HISTFILESIZE\=/#HISTFILESIZE\=/g ${BASH_RC}
 }
 
 function append_snippet() {
@@ -213,8 +213,10 @@ function append_snippet() {
 }
 
 function common_install() {
-    make_bash_rc_backup
-    comment_default_history_variables
+    if [ -f ${BASH_RC} ]; then
+        make_bash_rc_backup
+        comment_default_history_variables
+    fi
     append_snippet
 
     if [ ${OS} = "Mac" ]; then
