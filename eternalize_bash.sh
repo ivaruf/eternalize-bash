@@ -230,7 +230,7 @@ function common_install() {
 
 function local_install() {
     common_install
-    HISTFILE_LOCAITON=~/${HISTFILE_NAME}
+    HISTFILE_LOCATION=~/${HISTFILE_NAME}
     append_old_history ${HISTFILE_LOCATION}
     printf "histfile location ... is ${HISTFILE_LOCAITON}"
     # TODO Local install is broken? for some reason this might be empty
