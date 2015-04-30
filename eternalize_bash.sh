@@ -126,6 +126,9 @@ function unlink_from_dropbox() {
 
 function append_old_history() {
     printf "Appending all distinct lines from old history-file to new history-file\n"
+    # In case file does not exists yet, can't grep an empty file
+    # This is very slow - might want to just append like before?
+    touch $1
     while read line; do
         if ! grep -q "${line}" $1; then
           echo ${line} >> $1
@@ -232,8 +235,6 @@ function local_install() {
     common_install
     HISTFILE_LOCATION=~/${HISTFILE_NAME}
     append_old_history ${HISTFILE_LOCATION}
-    printf "histfile location ... is ${HISTFILE_LOCAITON}"
-    # TODO Local install is broken? for some reason this might be empty
     echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
     printf "${green}Successfuly installed! You now have eternal history on this machine.${colorless}\n"
     printf "${red}Remember to restart your shell!${colorless}\n"
