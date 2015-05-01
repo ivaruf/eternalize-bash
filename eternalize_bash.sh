@@ -100,7 +100,7 @@ function unlink_from_dropbox() {
 }
 
 function append_old_history() {
-    printf "Copy all unique commands from ${CURRENT_HISTFILE} to ${1}"
+    printf "Copy all unique commands:\nfrom ${CURRENT_HISTFILE} to ${1}\n"
 
     # Magic
     cat  $1 ${CURRENT_HISTFILE} | awk '!x[$0]++' > $1
