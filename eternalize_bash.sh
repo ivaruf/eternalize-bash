@@ -95,8 +95,7 @@ function unlink_from_dropbox() {
     fi
 
     cp ${HISTPATH} ${HISTFILE_NAME}
-    # TODO - fix this it's incorrect
-    sed -i 's/${HISTPATH}/${HISTFILE_NAME}/' ${BASH_RC}
+    sed -i '/${HISTFILE_NAME}/c\export HISTFILE=~/${HISTFILE_NAME}' ${BASH_RC}
     printf "${green}Update OK${colorless}\n"
     exit 0
 }
