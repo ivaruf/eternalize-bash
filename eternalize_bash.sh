@@ -77,7 +77,7 @@ function uninstall() {
 
     # Remove changes in .bash_profile on Mac
     if [ ${OS} = "Mac" ]; then
-        sedX 'source ~\/${BASH_RC}/d' ${BASH_PROFILE}
+        sedX "source ~\/${BASH_RC}/d" ${BASH_PROFILE}
     fi
 
     append_old_history ~/.bash_history
@@ -95,7 +95,7 @@ function unlink_from_dropbox() {
     fi
 
     cp ${HISTPATH} ${HISTFILE_NAME}
-    sedX '/${HISTFILE_NAME}/c\export HISTFILE=~/${HISTFILE_NAME}' ${BASH_RC}
+    sedX "/${HISTFILE_NAME}/c\export HISTFILE=~/${HISTFILE_NAME}" ${BASH_RC}
     printf "${green}Update OK${colorless}\n"
     exit 0
 }
@@ -122,7 +122,7 @@ function link_to_dropbox() {
         if ! grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
             echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
         else
-            sedX '/${HISTFILE_NAME}/c\export HISTFILE=${HISTFILE_LOCATION}' ${BASH_RC}
+            sedX "/${HISTFILE_NAME}/c\export HISTFILE=${HISTFILE_LOCATION}" ${BASH_RC}
         fi
     else
         printf "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}\n"
