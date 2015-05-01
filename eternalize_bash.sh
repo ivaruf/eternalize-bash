@@ -102,7 +102,7 @@ function unlink_from_dropbox() {
 function append_old_history() {
     printf "Appending all distinct lines from old history-file to new history-file\n"
     # Magic
-    cat ${CURRENT_HISTFILE} $1 | awk '!x[$0]++' >> $1
+    cat ${CURRENT_HISTFILE} $1 | awk '!x[$0]++' > $1
 }
 
 function link_to_dropbox() {
