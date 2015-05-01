@@ -39,17 +39,6 @@ orange='\033[0;33m'
 cyan='\033[1;36m'
 colorless='\033[0m'
 
-if [ ${HISTFILE} ]; then
-    CURRENT_HISTFILE=${HISTFILE}
-else
-    CURRENT_HISTFILE=~/.bash_history
-fi
-
-case $(uname) in
-    Linux) OS=Linux;;
-    Darwin) OS=Mac;;
-    *) check_if_windows;;
-esac
 
 function check_if_windows() {
     if [ -n "${WINDIR}" ]; then
@@ -66,20 +55,6 @@ function isSymlink() {
         return 1
     fi
 }
-
-printf "\nHistory file currently set to:\n"
-printf "${cyan}${CURRENT_HISTFILE}${colorless}"
-if isSymlink ${CURRENT_HISTFILE}; then
-    printf " -> "
-    HISTPATH=$(readlink -f ${CURRENT_HISTFILE})
-    printf ${HISTPATH}
-else
-    HISTPATH=${CURRENT_HISTFILE}
-fi
-
-printf "\n\n"
-
-printf "${green}Operating system: ${OS}${colorless}\n\n"
 
 function uninstall() {
     STARTLINE=`grep -n  "# Eternal bash history" ${BASH_RC} | cut -d ":" -f1`
@@ -273,6 +248,33 @@ function menu() {
         esac
     done
 }
+
+case $(uname) in
+    Linux) OS=Linux;;
+    Darwin) OS=Mac;;
+    *) check_if_windows;;
+esac
+
+if [ ${HISTFILE} ]; then
+    CURRENT_HISTFILE=${HISTFILE}
+else
+    CURRENT_HISTFILE=~/.bash_history
+fi
+
+printf "\nHistory file currently set to:\n"
+printf "${cyan}${CURRENT_HISTFILE}${colorless}"
+if isSymlink ${CURRENT_HISTFILE}; then
+    printf " -> "
+    HISTPATH=$(readlink -f ${CURRENT_HISTFILE})
+    printf ${HISTPATH}
+else
+    HISTPATH=${CURRENT_HISTFILE}
+fi
+
+printf "\n\n"
+
+printf "${green}Operating system: ${OS}${colorless}\n\n"
+
 
 # go to home directory
 cd
