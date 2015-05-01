@@ -119,10 +119,10 @@ function link_to_dropbox() {
 
     if [ ${OS} = "Windows" ]; then
         printf "Setting HISTFILE to ${HISTFILE_LOCATION} in ${BASH_RC}\n"
-        if grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
+        if ! grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
             echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
         else
-            sed -i 's/${HISTPATH}/${HISTFILE_LOCATION}/' ${BASH_RC}
+            sed -i '/${HISTFILE_NAME}/c\export HISTFILE=${HISTFILE_LOCATION}' ${BASH_RC}
         fi
     else
         printf "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}\n"
@@ -205,7 +205,6 @@ function common_install() {
     fi
 
     printf "History variables and command-promt setup added to ${BASH_RC}\n"
-    printf "History file is set to ~/${HISTFILE_NAME}\n"
 }
 
 function local_install() {
