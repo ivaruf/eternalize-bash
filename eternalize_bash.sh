@@ -100,9 +100,15 @@ function unlink_from_dropbox() {
 }
 
 function append_old_history() {
-    printf "Appending all distinct lines from old history-file to new history-file\n"
+    printf "Copy all unique commands from ${CURRENT_HISTFILE} to ${1}"
+
     # Magic
-    cat ${CURRENT_HISTFILE} $1 | awk '!x[$0]++' > $1
+    cat  $1 ${CURRENT_HISTFILE} | awk '!x[$0]++' > $1
+
+    # No, but seriously - this will concat new and old history file and remove
+    # duplicate entries while still maintaining order of commands. So, when
+    # you restart your shell, the previous command will be on top of the
+    # history. As expected.
 }
 
 function link_to_dropbox() {
