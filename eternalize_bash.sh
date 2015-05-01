@@ -77,7 +77,7 @@ function uninstall() {
 
     # Remove changes in .bash_profile on Mac
     if [ ${OS} = "Mac" ]; then
-        sedX "source ~\/${BASH_RC}/d" ${BASH_PROFILE}
+        sed -i '' -e "source ~\/${BASH_RC}/d" ${BASH_PROFILE}
     fi
 
     append_old_history ~/.bash_history
