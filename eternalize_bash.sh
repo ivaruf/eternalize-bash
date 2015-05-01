@@ -70,14 +70,14 @@ function uninstall() {
     done
 
     # Remove eternal bash config from .bashrc
-    sed -i "${STARTLINE},${ENDLINE}d" ${BASH_RC};
+    sedX "${STARTLINE},${ENDLINE}d" ${BASH_RC};
     # Restore previous HISTSIZE and HISTFILESIZE variables
-    sed -i s/^#HISTSIZE\=/HISTSIZE\=/g ${BASH_RC}
-    sed -i s/^#HISTFILESIZE\=/HISTFILESIZE\=/g ${BASH_RC}
+    sedX s/^#HISTSIZE\=/HISTSIZE\=/g ${BASH_RC}
+    sedX s/^#HISTFILESIZE\=/HISTFILESIZE\=/g ${BASH_RC}
 
     # Remove changes in .bash_profile on Mac
     if [ ${OS} = "Mac" ]; then
-        sed -i 'source ~\/${BASH_RC}/d' ${BASH_PROFILE}
+        sedX 'source ~\/${BASH_RC}/d' ${BASH_PROFILE}
     fi
 
     append_old_history ~/.bash_history
@@ -95,7 +95,7 @@ function unlink_from_dropbox() {
     fi
 
     cp ${HISTPATH} ${HISTFILE_NAME}
-    sed -i '/${HISTFILE_NAME}/c\export HISTFILE=~/${HISTFILE_NAME}' ${BASH_RC}
+    sedX '/${HISTFILE_NAME}/c\export HISTFILE=~/${HISTFILE_NAME}' ${BASH_RC}
     printf "${green}Update OK${colorless}\n"
     exit 0
 }
@@ -122,7 +122,7 @@ function link_to_dropbox() {
         if ! grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
             echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
         else
-            sed -i '/${HISTFILE_NAME}/c\export HISTFILE=${HISTFILE_LOCATION}' ${BASH_RC}
+            sedX '/${HISTFILE_NAME}/c\export HISTFILE=${HISTFILE_LOCATION}' ${BASH_RC}
         fi
     else
         printf "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}\n"
@@ -183,8 +183,8 @@ function make_bash_rc_backup() {
 function comment_default_history_variables() {
     # Unless we remove / comment theese lines from default ubuntu install
     # HISTFILE will still be truncated at 2000 lines (even if it was much bigger!)
-    sed -i s/^HISTSIZE\=/#HISTSIZE\=/g ${BASH_RC}
-    sed -i s/^HISTFILESIZE\=/#HISTFILESIZE\=/g ${BASH_RC}
+    sedX s/^HISTSIZE\=/#HISTSIZE\=/g ${BASH_RC}
+    sedX s/^HISTFILESIZE\=/#HISTFILESIZE\=/g ${BASH_RC}
 }
 
 function append_snippet() {
@@ -239,6 +239,15 @@ function menu() {
             Exit ) exit 0;;
         esac
     done
+}
+
+# God damn it Mac.
+function sedX() {
+    if [ ${OS} = "Mac" ]; then
+        sed -i '' $1 $2
+    else
+        sed -i $1 $2
+    fi
 }
 
 case $(uname) in
