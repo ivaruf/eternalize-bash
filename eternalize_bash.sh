@@ -86,6 +86,7 @@ function uninstall() {
     exit 0
 }
 
+#TODO append history when unlinking
 function unlink_from_dropbox() {
     printf "Moving ${HISTPATH} to ~/${HISTFILE_NAME} ${colorless}\n"
 
@@ -94,6 +95,7 @@ function unlink_from_dropbox() {
     fi
 
     cp ${HISTPATH} ${HISTFILE_NAME}
+    # TODO - fix this it's incorrect
     sed -i 's/${HISTPATH}/${HISTFILE_NAME}/' ${BASH_RC}
     printf "${green}Update OK${colorless}\n"
     exit 0
@@ -111,6 +113,7 @@ function append_old_history() {
     # history. As expected.
 }
 
+#TODO append history when linking.
 function link_to_dropbox() {
     mkdir -p  ${DROPBOX_DEFAULT_LOCATION}/${DROPBOX_FOLDER}/
     HISTFILE_LOCATION=${DROPBOX_DEFAULT_LOCATION}/${DROPBOX_FOLDER}/${HISTFILE_NAME}
