@@ -268,7 +268,7 @@ printf "\nHistory file currently set to:\n"
 printf "${cyan}${CURRENT_HISTFILE}${colorless}"
 if isSymlink ${CURRENT_HISTFILE}; then
     printf " -> "
-    HISTPATH=$(readlink -f ${CURRENT_HISTFILE})
+    HISTPATH=$(readlink ${CURRENT_HISTFILE})
     printf ${HISTPATH}
 else
     HISTPATH=${CURRENT_HISTFILE}
