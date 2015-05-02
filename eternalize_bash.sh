@@ -84,7 +84,7 @@ function uninstall() {
     append_old_history ~/.bash_history
 
     printf "${green}Successfuly uninstalled, your bash is now boring again.${colorless}\n"
-    exit 0
+    exit_reminder
 }
 
 #TODO append history when unlinking
@@ -98,7 +98,7 @@ function unlink_from_dropbox() {
     cp ${HISTPATH} ${HISTFILE_NAME}
     sedX "/${HISTFILE_NAME}/c\export HISTFILE=~/${HISTFILE_NAME}" ${BASH_RC}
     printf "${green}Update OK${colorless}\n"
-    exit 0
+    exit_reminder
 }
 
 function append_old_history() {
@@ -143,8 +143,7 @@ function link_to_dropbox() {
     fi
 
     printf "${green}Successfuly installed! You now have *distributed* eternal history.${colorless}\n"
-    printf "${red}Remember to restart your shell!${colorless}\n"
-    exit 0
+    exit_reminder
 }
 
 function toggle_dropbox() {
@@ -171,7 +170,7 @@ function change_menu() {
         case ${option} in
             Uninstall) uninstall;;
             "${DBOXOPTION} dropbox") toggle_dropbox ${DBOXOPTION};;
-            Exit ) exit;;
+            Exit ) exit 0;;
         esac
     done
 }
@@ -214,9 +213,7 @@ function local_install() {
     append_old_history ${HISTFILE_LOCATION}
     echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
     printf "${green}Successfuly installed! You now have eternal history on this machine.${colorless}\n"
-    printf "${red}Remember to restart your shell!${colorless}\n"
-
-    exit 0
+    exit_reminder
 }
 
 function dropbox_install() {
@@ -240,6 +237,11 @@ function menu() {
             Exit ) exit 0;;
         esac
     done
+}
+
+function exit_reminder() {
+    printf "${red}Remember to restart your shell!${colorless}\n"
+    exit 0
 }
 
 # God damn it Mac.
