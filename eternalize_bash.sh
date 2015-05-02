@@ -97,7 +97,7 @@ function unlink_from_dropbox() {
     cp ${HISTPATH} ${HISTFILE_NAME}
 
     if [ ${OS} = "Windows" ]; then
-      sedX "s/.*${HISTFILE_NAME}/export HISTFILE=~\/${HISTFILE_NAME}/" ${BASH_RC}
+      sedX "/${HISTFILE_NAME}/c\export HISTFILE=~\/${HISTFILE_NAME}" ${BASH_RC}
     fi
 
     printf "${green}Update OK${colorless}\n"
