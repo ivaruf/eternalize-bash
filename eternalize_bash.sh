@@ -95,7 +95,7 @@ function unlink_from_dropbox() {
     fi
 
     cp ${HISTPATH} ${HISTFILE_NAME}
-    sedX "/${HISTFILE_NAME}/c\export HISTFILE=~\/${HISTFILE_NAME}" ${BASH_RC}
+    sedX "s/.*${HISTFILE_NAME}.*/export HISTFILE=~\/${HISTFILE_NAME}/" ${BASH_RC}
     printf "${green}Update OK${colorless}\n"
     exit_reminder
 }
@@ -122,7 +122,7 @@ function link_to_dropbox() {
         if ! grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
             echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
         else
-            sedX "/${HISTFILE_NAME}/c\export HISTFILE=${HISTFILE_LOCATION}" ${BASH_RC}
+            sedX "s/.*${HISTFILE_NAME}.*/export HISTFILE=${HISTFILE_LOCATION}/" ${BASH_RC}
         fi
     else
         printf "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}\n"
