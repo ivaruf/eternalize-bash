@@ -126,7 +126,7 @@ function link_to_dropbox() {
         if ! grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
             echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
         else
-            sedX "s/.*${HISTFILE_NAME}.*/export HISTFILE=${HISTFILE_LOCATION}/" ${BASH_RC}
+            sedX "/${HISTFILE_NAME}/c\export HISTFILE=${HISTFILE_LOCATION}/" ${BASH_RC}
         fi
     else
         printf "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}\n"
