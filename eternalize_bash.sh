@@ -95,7 +95,7 @@ function unlink_from_dropbox() {
     fi
 
     cp ${HISTPATH} ${HISTFILE_NAME}
-    sedX "s/.*${HISTFILE_NAME}.*/export HISTFILE=~\/${HISTFILE_NAME}/" ${BASH_RC}
+    sedX 's/.*${HISTFILE_NAME}.*/export HISTFILE=~\/${HISTFILE_NAME}/' ${BASH_RC}
     printf "${green}Update OK${colorless}\n"
     exit_reminder
 }
@@ -122,7 +122,7 @@ function link_to_dropbox() {
         if ! grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
             echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
         else
-            sedX "s/.*${HISTFILE_NAME}.*/export HISTFILE=${HISTFILE_LOCATION}/" ${BASH_RC}
+            sedX 's/.*${HISTFILE_NAME}.*/export HISTFILE=${HISTFILE_LOCATION}/' ${BASH_RC}
         fi
     else
         printf "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}\n"
@@ -246,7 +246,7 @@ function exit_reminder() {
 # God damn it Mac.
 function sedX() {
     if [ ${OS} = "Mac" ]; then
-        sed -i '' $1 $2
+        sed -i '' -E $1 $2
     else
         sed -i $1 $2
     fi
