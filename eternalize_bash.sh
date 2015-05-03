@@ -39,6 +39,20 @@ orange='\033[0;33m'
 cyan='\033[1;36m'
 colorless='\033[0m'
 
+# Color print functions
+function print_green() {
+    printf "${green}${1}${colorless}\n"
+}
+function print_red() {
+    printf "${red}${1}${colorless}\n"
+}
+function print_cyan() {
+    printf "${cyan}${1}${colorless}\n"
+}
+function print_orange() {
+    printf "${orange}${1}${colorless}\n"
+}
+
 
 function check_if_windows() {
     if [ -n "${WINDIR}" ]; then
@@ -60,7 +74,7 @@ function uninstall() {
     STARTLINE=`grep -n  "# Eternal bash history" ${BASH_RC} | cut -d ":" -f1`
     ENDLINE=`grep -n  "/${HISTFILE_NAME}" ${BASH_RC} | cut -d ":" -f1`
 
-    printf "${red}Remove the following lines from ${BASH_RC}?${colorless} \n"
+    print_red "Remove the following lines from ${BASH_RC}?"
     sed -n "${STARTLINE},${ENDLINE}p" ${BASH_RC}
     select option in "Proceed" "Cancel"; do
         case ${option} in
@@ -82,13 +96,13 @@ function uninstall() {
 
     append_old_history ~/.bash_history
 
-    printf "${green}Successfuly uninstalled, your bash is now boring again.${colorless}\n"
+    print_green "Successfuly uninstalled, your bash is now boring again."
     exit_reminder
 }
 
 #TODO append history when unlinking
 function unlink_from_dropbox() {
-    printf "Moving ${HISTPATH} to ~/${HISTFILE_NAME} ${colorless}\n"
+    printf "Moving ${HISTPATH} to ~/${HISTFILE_NAME}\n"
 
     if isSymlink ${HISTFILE_NAME}; then
         rm ${HISTFILE_NAME};
@@ -100,7 +114,7 @@ function unlink_from_dropbox() {
       sed -i "/${HISTFILE_NAME}/c\export HISTFILE=~\/${HISTFILE_NAME}" ${BASH_RC}
     fi
 
-    printf "${green}Update OK${colorless}\n"
+    print_green "Update OK"
     exit_reminder
 }
 
@@ -145,7 +159,7 @@ function link_to_dropbox() {
         fi
     fi
 
-    printf "${green}Successfuly installed! You now have *distributed* eternal history.${colorless}\n"
+    print_green "Successfuly installed! You now have *distributed* eternal history."
     exit_reminder
 }
 
@@ -215,13 +229,13 @@ function local_install() {
     HISTFILE_LOCATION=~/${HISTFILE_NAME}
     append_old_history ${HISTFILE_LOCATION}
     echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
-    printf "${green}Successfuly installed! You now have eternal history on this machine.${colorless}\n"
+    print_green "Successfuly installed! You now have eternal history on this machine."
     exit_reminder
 }
 
 function dropbox_install() {
     if ! [[ -d "${DROPBOX_DEFAULT_LOCATION}" ]]; then
-        print "${red}Dropbox not found!${colorless}\n"
+        print_red "Dropbox not found!"
         menu
     else
         common_install
@@ -230,7 +244,7 @@ function dropbox_install() {
 }
 
 function menu() {
-    printf "${orange}Installation can be changed later by re-running script.${colorless}\n"
+    print_orange "Installation can be changed later by re-running script."
     printf "What would you like to do? \n"
 
     select option in "Install locally" "Install with Dropbox" "Exit"; do
@@ -243,7 +257,7 @@ function menu() {
 }
 
 function exit_reminder() {
-    printf "${red}Remember to restart your shell!${colorless}\n"
+    print_red "Remember to restart your shell!"
     exit 0
 }
 
@@ -280,8 +294,7 @@ fi
 
 printf "\n\n"
 
-printf "${green}Operating system: ${OS}${colorless}\n\n"
-
+print_green "Operating system: ${OS}\n"
 
 # go to home directory
 cd
