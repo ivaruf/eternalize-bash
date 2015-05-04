@@ -59,6 +59,7 @@ function check_if_windows() {
         OS=Windows
     else
       print_red "Unable to detect operating system."
+      print_cyan "Maybe submit a ticket? https://github.com/ivaruf/eternalize-bash/issues"
       exit 1;
     fi
 }
@@ -279,7 +280,9 @@ function init() {
   if [ ${HISTFILE} ]; then
     CURRENT_HISTFILE=${HISTFILE}
   else
-    print_red "Unable to find current history file."
+    print_red "Unable to find current history file from $HISTFILE"
+    printf "It might not be exported, try running the following then re-run this script:\n"
+    print_cyan "export HISTFILE=$HISTFILE"
     exit 1;
   fi
 
