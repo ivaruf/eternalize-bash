@@ -304,12 +304,11 @@ function init() {
   if [ -f ${BASH_RC} ]; then
     if grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
       change_menu
-    else
-      menu
     fi
-  else
-    menu
   fi
+
+  # Start main menu
+  menu
 }
 
 init
