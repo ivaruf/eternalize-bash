@@ -17,15 +17,22 @@ Features:
 * shared history between machines (using dropbox).
 
 Usage:
-Run eternalize-bash.sh and select the options you want.
+Download the script, run eternalize-bash.sh and select the options you want.
 
-One line install:
+**I can't be bothered, give me a one-liner to paste in my shell**
+
+Linux & OS X:
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/ivaruf/eternalize-bash/master/eternalize_bash.sh)
 ```
+Windows with git-bash (does not support process substitution)
+```bash
+curl -s https://raw.githubusercontent.com/ivaruf/eternalize-bash/master/eternalize_bash.sh > tmp.sh && ./tmp.sh && rm tmp.sh
+```
 
-**Re-run the script to link/unlink from dropbox or to uninstall.**
-Restart your shell for changes to take effect (or run "source .bashrc")
+*Re-run the script to link/unlink from dropbox or to uninstall.*
+
+**Restart your shell for changes to take effect (or run "source .bashrc")**
 
 ##Requirements
 One of the following:
@@ -34,4 +41,4 @@ One of the following:
 * Windows with git-bash
 
 Optional:
-* Dropbox, this is only required for machine distributed history.
+* Dropbox, for multi-machine history.
