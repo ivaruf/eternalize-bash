@@ -12,14 +12,14 @@
     /_/
 
 ## Features
-* unlimited history-size, so you never have to lose another command.
-* shared history between open terminals.
-* shared history between machines (using dropbox).
+* Unlimited history-size, so you never have to lose another command.
+* Shared history between open terminals.
+* Shared history between machines (using dropbox).
 
 ## Usage
-* Download the script 
-* ./eternalize_bash.sh 
-* select the options you want
+* Download the script. 
+* Run `./eternalize_bash.sh`. 
+* Select the options you want.
 
 *Re-run the script to link/unlink from dropbox or to uninstall.*
 
@@ -31,16 +31,16 @@ Linux & OS X:
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/ivaruf/eternalize-bash/master/eternalize_bash.sh)
 ```
-Windows with git-bash (does not support process substitution)
+Windows with git-bash (does not support process substitution):
 ```bash
 curl -s https://raw.githubusercontent.com/ivaruf/eternalize-bash/master/eternalize_bash.sh > tmp.sh && ./tmp.sh && rm tmp.sh
 ```
 
 ##Requirements
 One of the following:
-* Linux with bash shell
-* Mac with bash shell
-* Windows with git-bash
+* Linux with bash shell.
+* Mac with bash shell.
+* Windows with git-bash.
 
 Optional:
 * Dropbox, for multi-machine history.
