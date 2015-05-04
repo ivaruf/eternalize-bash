@@ -58,7 +58,8 @@ function check_if_windows() {
     if [ -n "${WINDIR}" ]; then
         OS=Windows
     else
-        OS=Unknown
+      print_red "Unable to detect operating system."
+      exit 1;
     fi
 }
 
@@ -279,7 +280,8 @@ esac
 if [ ${HISTFILE} ]; then
     CURRENT_HISTFILE=${HISTFILE}
 else
-    CURRENT_HISTFILE=~/.bash_history
+    print_red "Unable to find current history file."
+    exit 1;
 fi
 
 printf "\nHistory file currently set to:\n"
