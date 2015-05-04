@@ -101,7 +101,6 @@ function uninstall() {
     exit_reminder
 }
 
-#TODO append history when unlinking
 function unlink_from_dropbox() {
     printf "Moving ${HISTPATH} to ~/${HISTFILE_NAME}\n"
 
@@ -127,8 +126,8 @@ function append_old_history() {
 
     # No, but seriously - this will concat new and old history file and remove
     # duplicate entries while still maintaining order of commands. So, when
-    # you restart your shell, the previous command will be on top of the
-    # history. As expected.
+    # you restart your shell, the previous command will be the last entry of
+    # resulting history. As expected.
 }
 
 function link_to_dropbox() {
@@ -261,7 +260,7 @@ function exit_reminder() {
     exit 0
 }
 
-# God damn it Mac.
+# God damn it Apple.
 function sedX() {
     if [ ${OS} = "Mac" ]; then
         sed -i '' -E $1 $2
