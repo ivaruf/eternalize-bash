@@ -18,7 +18,7 @@
 
 ## Usage
 * Download the script 
-* run eternalize-bash.sh 
+* ./eternalize_bash.sh 
 * select the options you want
 
 *Re-run the script to link/unlink from dropbox or to uninstall.*
