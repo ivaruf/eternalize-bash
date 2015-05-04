@@ -21,7 +21,7 @@ Run eternalize-bash.sh and select the options you want.
 
 One line install:
 ```bash
-bash <(wget -qO- https://raw.githubusercontent.com/ivaruf/eternalize-bash/master/eternalize_bash.sh)
+bash <(curl -s https://raw.githubusercontent.com/ivaruf/eternalize-bash/master/eternalize_bash.sh)
 ```
 
 **Re-run the script to link/unlink from dropbox or to uninstall.**
