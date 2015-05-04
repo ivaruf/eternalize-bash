@@ -130,13 +130,16 @@ function append_old_history() {
     # history. As expected.
 }
 
-#TODO append history when linking.
 function link_to_dropbox() {
     mkdir -p  ${DROPBOX_DEFAULT_LOCATION}/${DROPBOX_FOLDER}/
     HISTFILE_LOCATION=${DROPBOX_DEFAULT_LOCATION}/${DROPBOX_FOLDER}/${HISTFILE_NAME}
 
+    # Append history BEFORE linking, to avoid history-loss
+    append_old_history ${HISTFILE_LOCATION}
+
     if [ ${OS} = "Windows" ]; then
         printf "Setting HISTFILE to ${HISTFILE_LOCATION} in ${BASH_RC}\n"
+
         if ! grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
             echo export HISTFILE=${HISTFILE_LOCATION} >> ${BASH_RC}
         else
@@ -145,9 +148,6 @@ function link_to_dropbox() {
     else
         printf "Making link ~/${HISTFILE_NAME} -> ${HISTFILE_LOCATION}\n"
         touch ${HISTFILE_LOCATION}
-
-        # Append history BEFORE linking, to avoid history-loss
-        append_old_history ${HISTFILE_LOCATION}
 
         # Force symlink file might exist if first installed locally, then linked to dropbox
         ln -sf ${HISTFILE_LOCATION} ${HISTFILE_NAME}
