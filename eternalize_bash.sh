@@ -269,42 +269,46 @@ function sedX() {
     fi
 }
 
-case $(uname) in
+function init() {
+  case $(uname) in
     Linux) OS=Linux;;
     Darwin) OS=Mac;;
     *) check_if_windows;;
-esac
+  esac
 
-if [ ${HISTFILE} ]; then
+  if [ ${HISTFILE} ]; then
     CURRENT_HISTFILE=${HISTFILE}
-else
+  else
     print_red "Unable to find current history file."
     exit 1;
-fi
+  fi
 
-printf "\nHistory file currently set to:\n"
-printf "${cyan}${CURRENT_HISTFILE}${colorless}"
-if isSymlink ${CURRENT_HISTFILE}; then
+  printf "\nHistory file currently set to:\n"
+  printf "${cyan}${CURRENT_HISTFILE}${colorless}"
+  if isSymlink ${CURRENT_HISTFILE}; then
     printf " -> "
     HISTPATH=$(readlink ${CURRENT_HISTFILE})
     printf ${HISTPATH}
-else
+  else
     HISTPATH=${CURRENT_HISTFILE}
-fi
-
-printf "\n\n"
-
-print_green "Operating system: ${OS}\n"
-
-# go to home directory
-cd
-
-# If .bashrc exist and we find .bash_eternal_histor in it, we open the change menu
-if [ -f ${BASH_RC} ]; then
-  if grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
-    change_menu
   fi
-fi
 
-# Start main menu
-menu
+  printf "\n\n"
+
+  print_green "Operating system: ${OS}\n"
+
+  # go to home directory
+  cd
+
+  # If .bashrc exist and we find .bash_eternal_histor in it, we open the change menu
+  if [ -f ${BASH_RC} ]; then
+    if grep -q "${HISTFILE_NAME}" "${BASH_RC}"; then
+      change_menu
+    fi
+  fi
+
+  # Start main menu
+  menu
+}
+
+init
