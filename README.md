@@ -11,15 +11,20 @@
     /  _/ /_.___/\__,_/ /____/ /_/ /_/
     /_/
 
-Eternalize-bash is a script that will make your bash history distributed between open terminals and even between machines, if you have Dropbox and run the script on all machines.
+Features:
+* unlimited history-size, so you never have to lose another command.
+* shared history between open terminals.
+* shared history between machines (using dropbox).
 
-Run the eternalize-bash-script, and you will get distributed eternal bash history happiness ☯
+Usage:
+Run eternalize-bash.sh and select the options you want.
 
-Can be done without cloning the project:
+One line install:
 ```bash
 curl -s https://raw.githubusercontent.com/ivaruf/eternalize-bash/master/eternalize_bash.sh | bash
 ```
 
+**Re-run the script to link/unlink from dropbox or to uninstall.**
 Restart your shell for changes to take effect (or run "source .bashrc")
 
 ##Requirements
@@ -29,9 +34,4 @@ One of the following:
 * Windows with git-bash
 
 Optional:
-* Dropbox, installed in default location. The script will run without it, but it will only give you distributed
-bash history between terminals on one machine.
-
-##Disclaimer
-This is experimental stuff, I have tried to make the script so that there is very little chance it will break
-anything, but i give no guarantees.
+* Dropbox, this is only required for machine distributed history.
