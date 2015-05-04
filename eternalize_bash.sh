@@ -282,7 +282,7 @@ function init() {
   else
     print_red "Unable to find current history file from $HISTFILE"
     printf "It might not be exported, try running the following then re-run this script:\n"
-    print_cyan "export HISTFILE=$HISTFILE"
+    print_cyan "export HISTFILE=\$HISTFILE"
     exit 1;
   fi
 
