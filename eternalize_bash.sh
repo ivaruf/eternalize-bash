@@ -169,7 +169,6 @@ function toggle_dropbox() {
     case $1 in
         Unlink) unlink_from_dropbox;;
         Link) link_to_dropbox;;
-        Cancel ) change_menu;;
     esac
 }
 
