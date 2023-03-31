@@ -25,7 +25,7 @@
 
 **Restart your shell for changes to take effect (or run "source .bashrc")**
 
-##"I can't be bothered, give me a one-liner to paste in my shell."
+## "I can't be bothered, give me a one-liner to paste in my shell."
 
 Linux & OS X:
 ```bash
@@ -36,7 +36,7 @@ Windows with git-bash (does not support process substitution):
 curl -s https://raw.githubusercontent.com/ivaruf/eternalize-bash/master/eternalize_bash.sh > tmp.sh && ./tmp.sh && rm tmp.sh
 ```
 
-##Requirements
+## Requirements
 One of the following:
 * Linux with bash shell.
 * Mac with bash shell.
